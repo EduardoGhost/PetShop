@@ -3,14 +3,20 @@ package com.eduardo.petshop
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.eduardo.petshop.ui.PetListScreen
+import com.eduardo.petshop.ui.PetListViewModel
+import com.eduardo.petshop.ui.pet.PetScreen
+import com.eduardo.petshop.ui.pet.PetViewModel
 import com.eduardo.petshop.ui.theme.PetShopTheme
+import com.eduardo.petshop.ui.util.Route
+import com.eduardo.petshop.ui.util.UiEvent
+import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,27 +25,55 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PetShopTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = Route.petList
                 ) {
-                    Greeting("Android")
+                    composable(route = Route.petList) {
+                        val viewModel = hiltViewModel<PetListViewModel>()
+                        val petList by viewModel.petList.collectAsStateWithLifecycle()
+
+                        PetListScreen(
+                            petList = petList,
+                            onPetClick = {
+                                navController.navigate(
+                                    Route.pet.replace(
+                                        "{id}",
+                                        it.petId.toString()
+                                    )
+                                )
+                            },
+                            onAddPetClick = {
+                                navController.navigate(Route.pet)
+                            }
+                        )
+                    }
+
+                    composable(route = Route.pet) {
+                        val viewModel = hiltViewModel<PetViewModel>()
+                        val state by viewModel.state.collectAsStateWithLifecycle()
+
+                        LaunchedEffect(key1 = true) {
+                            viewModel.event.collect { event ->
+                                when (event) {
+                                    is UiEvent.NavigateBack -> {
+                                        navController.popBackStack()
+                                    }
+
+                                    else -> Unit
+                                }
+                            }
+                        }
+
+                        PetScreen(
+                            state = state,
+                            onEvent = viewModel::onEvent
+                        )
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    PetShopTheme {
-        Greeting("Android")
     }
 }
