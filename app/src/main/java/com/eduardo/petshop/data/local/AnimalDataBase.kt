@@ -6,7 +6,6 @@ import com.eduardo.petshop.data.local.dao.AnimalDao
 import com.eduardo.petshop.data.local.entity.AnimalEntity
 
 @Database(entities = [AnimalEntity::class], version = 1)
-
 abstract class AnimalDataBase: RoomDatabase(){
     abstract val dao: AnimalDao
 

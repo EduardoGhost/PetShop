@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.eduardo.petshop.domain.model.Animal
+import com.eduardo.petshop.ui.pet.PetScreen
+import com.eduardo.petshop.ui.pet.PetState
 import com.eduardo.petshop.ui.theme.PetShopTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,20 +74,32 @@ fun PetListScreen(
 }
 
 
-
-
-
-
-
-@Composable
-fun Greeting2(name: String) {
-    Text(text = "Hecllo $name!")
-}
-
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview2() {
+fun PetListScreenPreview() {
+    val petList = listOf(
+        Animal(1, "Dog"),
+        Animal(2, "Cat"),
+        Animal(3, "fish")
+    )
+
     PetShopTheme {
-        Greeting2("Android")
+        PetListScreen(
+            petList = petList,
+            onPetClick = { /* Handle pet click */ },
+            onAddPetClick = { /* Handle add pet click */ }
+        )
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun PetScreenPreview() {
+    val state = PetState(name = "Dogão", type = "Dog")
+
+    PetShopTheme {
+        PetScreen(
+            state = state,
+            onEvent = { /* Handle events */ }
+        )
     }
 }
