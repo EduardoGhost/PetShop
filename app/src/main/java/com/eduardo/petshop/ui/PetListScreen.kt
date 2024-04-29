@@ -73,24 +73,6 @@ fun PetListScreen(
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun PetListScreenPreview() {
-    val petList = listOf(
-        Animal(1, "Dog"),
-        Animal(2, "Cat"),
-        Animal(3, "fish")
-    )
-
-    PetShopTheme {
-        PetListScreen(
-            petList = petList,
-            onPetClick = { /* Handle pet click */ },
-            onAddPetClick = { /* Handle add pet click */ }
-        )
-    }
-}
 @Preview(showBackground = true)
 @Composable
 fun PetScreenPreview() {

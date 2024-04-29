@@ -20,7 +20,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.eduardo.petshop.ui.theme.PetShopTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,6 +71,28 @@ fun PetScreen(
                 ),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
+//            state.name?.let {
+//                OutlinedTextField(
+//                    value = it,
+//                    onValueChange = {
+//                        onEvent(PetEvent.nameChange(it))
+//                    },
+//                    placeholder = {
+//                        Text(text = "name")
+//                    }
+//                )
+//            }
+//            state.type?.let {
+//                OutlinedTextField(
+//                    value = it,
+//                    onValueChange = {
+//                        onEvent(PetEvent.typeChange(it))
+//                    },
+//                    placeholder = {
+//                        Text(text = "type")
+//                    }
+//                )
+//            }
             state.name?.let {
                 OutlinedTextField(
                     value = it,
@@ -76,7 +100,7 @@ fun PetScreen(
                         onEvent(PetEvent.nameChange(it))
                     },
                     placeholder = {
-                        Text(text = "Title")
+                        Text(text = "name")
                     }
                 )
             }
@@ -87,7 +111,7 @@ fun PetScreen(
                         onEvent(PetEvent.typeChange(it))
                     },
                     placeholder = {
-                        Text(text = "Content")
+                        Text(text = "type")
                     }
                 )
             }
@@ -106,5 +130,14 @@ fun PetScreen(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PetScreenPreview() {
+    val state = PetState(name = "jao", type = "Dog")
+    PetShopTheme {
+        PetScreen(state = state, onEvent = {})
     }
 }

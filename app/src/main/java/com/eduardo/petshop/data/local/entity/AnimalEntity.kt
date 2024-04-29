@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 data class AnimalEntity(
     @PrimaryKey val petId: Int?,
     val name: String?,
-//    val type: String?,
+    val type: String?,
+    //implementar
 //    val age: Int? ,
 //    val picture: String? = null,
 //    val gender: String? = null,
