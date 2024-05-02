@@ -8,8 +8,8 @@ data class AnimalEntity(
     @PrimaryKey val petId: Int?,
     val name: String?,
     val type: String?,
+    val age: String?,
     //implementar
-//    val age: Int? ,
 //    val picture: String? = null,
 //    val gender: String? = null,
 )

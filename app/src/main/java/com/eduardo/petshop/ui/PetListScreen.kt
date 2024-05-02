@@ -18,6 +18,8 @@ import com.eduardo.petshop.domain.model.Animal
 import com.eduardo.petshop.ui.pet.PetScreen
 import com.eduardo.petshop.ui.pet.PetState
 import com.eduardo.petshop.ui.theme.PetShopTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.ui.text.font.FontWeight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,40 +45,82 @@ fun PetListScreen(
         )) {
             item {
                 Text(
-                    text = "Pets",
+                    text = "PetShop - Registro de Animais",
                     style = MaterialTheme.typography.titleLarge
                 )
             }
             items(petList) { pet ->
-                ListItem(
-                    headlineText = {
-                        pet.name?.let {
-                            Text(
-                                text = it,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                        }
-                    },
-                    supportingText = {
-                        pet.type?.let {
-                            Text(
-                                text = it,
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                    },
+                ListItem({
+                    Column {
+                        Text(
+                            text = "Nome",
+                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                        )
+                        Text(
+                            text = pet.name ?: "",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            text = "Tipo",
+                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                        )
+                        Text(
+                            text = pet.type ?: "",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            text = "Idade",
+                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                        )
+                        Text(
+                            text = pet.age ?: "",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                },
                     modifier = Modifier.clickable { onPetClick(pet) }
                 )
             }
         }
     }
 }
+//            items(petList) { pet ->
+//                ListItem(
+//                    headlineText = {
+//                        pet.name?.let {
+//                            Text(
+//                                text = it,
+//                                style = MaterialTheme.typography.bodyMedium
+//                            )
+//                        }
+//                    },
+//                    supportingText = {
+//                        pet.type?.let {
+//                            Text(
+//                                text = it,
+//                                maxLines = 2,
+//                                overflow = TextOverflow.Ellipsis
+//                            )
+//                        }
+//                        pet.age?.let {
+//                            Text(
+//                                text = it,
+//                                maxLines = 1,
+//                                overflow = TextOverflow.Ellipsis
+//                            )
+//                        }
+//                    },
+//                    modifier = Modifier.clickable { onPetClick(pet) }
+//                )
+//            }
+//        }
+//    }
+//}
 
 @Preview(showBackground = true)
 @Composable
 fun PetScreenPreview() {
-    val state = PetState(name = "Dogão", type = "Dog")
+    val state = PetState(name = "Dogão", type = "Dog", age = "3")
 
     PetShopTheme {
         PetScreen(

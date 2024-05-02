@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.eduardo.petshop.ui.theme.PetShopTheme
+import com.eduardo.petshop.ui.theme.Gray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,7 +78,7 @@ fun PetScreen(
                     onEvent(PetEvent.nameChange(it))
                 },
                 placeholder = {
-                    Text(text = "Name")
+                    Text(text = "Name", color = Gray)
                 }
             )
             OutlinedTextField(
@@ -86,7 +87,17 @@ fun PetScreen(
                     onEvent(PetEvent.typeChange(it))
                 },
                 placeholder = {
-                    Text(text = "Type")
+                    Text(text = "Type", color = Gray)
+                }
+            )
+
+            OutlinedTextField(
+                value = state.age ?: "",
+                onValueChange = {
+                    onEvent(PetEvent.ageChange(it))
+                },
+                placeholder = {
+                    Text(text = "Age", color = Gray)
                 }
             )
 
@@ -110,7 +121,7 @@ fun PetScreen(
 @Preview(showBackground = true)
 @Composable
 fun PetScreenPreview() {
-    val state = PetState(name = "jao", type = "Dog")
+    val state = PetState(name = "jao", type = "Dog", age = "3")
     PetShopTheme {
         PetScreen(state = state, onEvent = {})
     }
