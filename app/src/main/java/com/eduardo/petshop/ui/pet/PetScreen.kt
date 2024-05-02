@@ -71,50 +71,24 @@ fun PetScreen(
                 ),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-//            state.name?.let {
-//                OutlinedTextField(
-//                    value = it,
-//                    onValueChange = {
-//                        onEvent(PetEvent.nameChange(it))
-//                    },
-//                    placeholder = {
-//                        Text(text = "name")
-//                    }
-//                )
-//            }
-//            state.type?.let {
-//                OutlinedTextField(
-//                    value = it,
-//                    onValueChange = {
-//                        onEvent(PetEvent.typeChange(it))
-//                    },
-//                    placeholder = {
-//                        Text(text = "type")
-//                    }
-//                )
-//            }
-            state.name?.let {
-                OutlinedTextField(
-                    value = it,
-                    onValueChange = {
-                        onEvent(PetEvent.nameChange(it))
-                    },
-                    placeholder = {
-                        Text(text = "name")
-                    }
-                )
-            }
-            state.type?.let {
-                OutlinedTextField(
-                    value = it,
-                    onValueChange = {
-                        onEvent(PetEvent.typeChange(it))
-                    },
-                    placeholder = {
-                        Text(text = "type")
-                    }
-                )
-            }
+            OutlinedTextField(
+                value = state.name ?: "",
+                onValueChange = {
+                    onEvent(PetEvent.nameChange(it))
+                },
+                placeholder = {
+                    Text(text = "Name")
+                }
+            )
+            OutlinedTextField(
+                value = state.type ?: "",
+                onValueChange = {
+                    onEvent(PetEvent.typeChange(it))
+                },
+                placeholder = {
+                    Text(text = "Type")
+                }
+            )
 
             Box(
                 modifier = Modifier.fillMaxWidth(),
