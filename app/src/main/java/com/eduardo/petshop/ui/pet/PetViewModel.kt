@@ -43,6 +43,7 @@ class PetViewModel @Inject constructor(
                             petId = pet.petId,
                             type = pet.type,
                             age = pet.age,
+                            picture = pet.picture,
                         )
                     }
                 }
@@ -74,6 +75,13 @@ class PetViewModel @Inject constructor(
                     )
                 }
             }
+            is PetEvent.pictureChange -> {
+                _state.update {
+                    it.copy(
+                        picture = event.value
+                    )
+                }
+            }
 
             PetEvent.NavigateBack -> sendEvent(UiEvent.NavigateBack)
             PetEvent.Save -> {
@@ -84,6 +92,7 @@ class PetViewModel @Inject constructor(
                         name = state.name,
                         type = state.type,
                         age = state.age,
+                        picture = state.picture,
                     )
                     if (state.petId == null) {
                         repository.insertAnimal(pet)
@@ -101,6 +110,7 @@ class PetViewModel @Inject constructor(
                         name = state.name,
                         type = state.type,
                         age = state.age,
+                        picture = state.picture,
                     )
                     repository.deleteAnimal(pet)
                 }

@@ -5,4 +5,5 @@ data class PetState(
     val name: String? = null,
     val type: String? = null,
     val age: String? = null,
+    val picture: String? = null,
 )

@@ -17,6 +17,7 @@ import com.eduardo.petshop.ui.theme.PetShopTheme
 import com.eduardo.petshop.ui.util.Route
 import com.eduardo.petshop.ui.util.UiEvent
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.eduardo.petshop.ui.pet.PetEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -69,7 +70,10 @@ class MainActivity : ComponentActivity() {
 
                         PetScreen(
                             state = state,
-                            onEvent = viewModel::onEvent
+                            onEvent = viewModel::onEvent,
+                            onImageSelected = { uri ->
+                                viewModel.onEvent(PetEvent.pictureChange(uri.toString()))
+                            }
                         )
                     }
                 }

@@ -1,36 +1,43 @@
 package com.eduardo.petshop.ui.pet
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import android.net.Uri
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.Image
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.eduardo.petshop.ui.theme.PetShopTheme
+import coil.compose.rememberAsyncImagePainter
 import com.eduardo.petshop.ui.theme.Gray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PetScreen(
     state: PetState,
-    onEvent: (PetEvent) -> Unit
+    onEvent: (PetEvent) -> Unit,
+    onImageSelected: (Uri) -> Unit
 ) {
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri ->
+            uri?.let {
+                Log.d("URI_DEBUG", "URI: $uri")
+                onImageSelected(it)
+            }
+        }
+    )
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -101,10 +108,30 @@ fun PetScreen(
                 }
             )
 
+            Button(
+                onClick = {
+                    galleryLauncher.launch("image/*")
+                }
+            ) {
+                Text(
+                    text = "Pick image"
+                )
+            }
+
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
+                imageUri?.let {
+                    Image(
+                        painter = rememberAsyncImagePainter(model = imageUri),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(36.dp)
+                    )
+                }
+
                 Button(
                     onClick = {
                         onEvent(PetEvent.Save)
@@ -118,11 +145,12 @@ fun PetScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PetScreenPreview() {
-    val state = PetState(name = "jao", type = "Dog", age = "3")
-    PetShopTheme {
-        PetScreen(state = state, onEvent = {})
-    }
-}
+
+//@Preview(showBackground = true)
+//@Composable
+//fun PetScreenPreview() {
+//    val state = PetState(name = "jao", type = "Dog", age = "3", picture = "")
+//    PetShopTheme {
+//        PetScreen(state = state, onEvent = {})
+//    }
+//}

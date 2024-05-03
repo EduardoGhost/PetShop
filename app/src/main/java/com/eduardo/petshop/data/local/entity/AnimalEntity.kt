@@ -9,7 +9,6 @@ data class AnimalEntity(
     val name: String?,
     val type: String?,
     val age: String?,
-    //implementar
-//    val picture: String? = null,
+    val picture: String?,
 //    val gender: String? = null,
 )

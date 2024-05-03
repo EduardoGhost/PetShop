@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.eduardo.petshop.domain.model.Animal
 import com.eduardo.petshop.ui.pet.PetScreen
@@ -20,6 +19,7 @@ import com.eduardo.petshop.ui.pet.PetState
 import com.eduardo.petshop.ui.theme.PetShopTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.text.font.FontWeight
+import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,6 +76,12 @@ fun PetListScreen(
                             text = pet.age ?: "",
                             style = MaterialTheme.typography.bodyMedium
                         )
+                        Text(
+                            text = "Foto",
+                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                        )
+                        AsyncImage(model = pet.picture,
+                            contentDescription = "imagem")
                     }
                 },
                     modifier = Modifier.clickable { onPetClick(pet) }
@@ -84,48 +90,16 @@ fun PetListScreen(
         }
     }
 }
-//            items(petList) { pet ->
-//                ListItem(
-//                    headlineText = {
-//                        pet.name?.let {
-//                            Text(
-//                                text = it,
-//                                style = MaterialTheme.typography.bodyMedium
-//                            )
-//                        }
-//                    },
-//                    supportingText = {
-//                        pet.type?.let {
-//                            Text(
-//                                text = it,
-//                                maxLines = 2,
-//                                overflow = TextOverflow.Ellipsis
-//                            )
-//                        }
-//                        pet.age?.let {
-//                            Text(
-//                                text = it,
-//                                maxLines = 1,
-//                                overflow = TextOverflow.Ellipsis
-//                            )
-//                        }
-//                    },
-//                    modifier = Modifier.clickable { onPetClick(pet) }
-//                )
-//            }
-//        }
+
+//@Preview(showBackground = true)
+//@Composable
+//fun PetScreenPreview() {
+//    val state = PetState(name = "Dogão", type = "Dog", age = "3", picture = "content://com.android.externalstorage.documents/document/primary%3ADownload%2Fcao.jpg")
+//
+//    PetShopTheme {
+//        PetScreen(
+//            state = state,
+//            onEvent = { /* Handle events */ }
+//        )
 //    }
 //}
-
-@Preview(showBackground = true)
-@Composable
-fun PetScreenPreview() {
-    val state = PetState(name = "Dogão", type = "Dog", age = "3")
-
-    PetShopTheme {
-        PetScreen(
-            state = state,
-            onEvent = { /* Handle events */ }
-        )
-    }
-}

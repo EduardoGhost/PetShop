@@ -4,8 +4,8 @@ import com.eduardo.petshop.data.local.entity.AnimalEntity
 import com.eduardo.petshop.domain.model.Animal
 
 fun AnimalEntity.asExternalModel(): Animal = Animal(
-    petId, name, type, age
+    petId, name, type, age, picture
 )
 fun Animal.toEntity(): AnimalEntity = AnimalEntity(
-    petId, name, type, age
+    petId, name, type, age, picture
 )

@@ -6,6 +6,6 @@ data class Animal(
     val type: String? = null,
     val age: String? = null,
     //imple. imagem local e remoto
-//    val picture: String? = null,
+    val picture: String? = null,
 //    val gender: String? = null,
 )
