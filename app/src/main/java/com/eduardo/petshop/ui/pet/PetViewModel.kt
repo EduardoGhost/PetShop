@@ -41,6 +41,7 @@ class PetViewModel @Inject constructor(
                     _state.update { screenState ->
                         screenState.copy(
                             petId = pet.petId,
+                            name = pet.name,
                             type = pet.type,
                             age = pet.age,
                             picture = pet.picture,
