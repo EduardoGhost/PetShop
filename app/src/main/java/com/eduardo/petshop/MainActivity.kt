@@ -17,6 +17,7 @@ import com.eduardo.petshop.ui.theme.PetShopTheme
 import com.eduardo.petshop.ui.util.Route
 import com.eduardo.petshop.ui.util.UiEvent
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.eduardo.petshop.ui.SplashScreen
 import com.eduardo.petshop.ui.pet.PetEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,8 +31,12 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = Route.petList
+                    startDestination = Route.splashScreen
                 ) {
+                    composable(route = Route.splashScreen) {
+                        SplashScreen(navController)
+                    }
+
                     composable(route = Route.petList) {
                         val viewModel = hiltViewModel<PetListViewModel>()
                         val petList by viewModel.petList.collectAsStateWithLifecycle()

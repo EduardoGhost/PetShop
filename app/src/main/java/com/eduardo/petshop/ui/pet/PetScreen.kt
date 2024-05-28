@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.core.text.isDigitsOnly
 import coil.compose.rememberAsyncImagePainter
 import com.eduardo.petshop.ui.theme.Gray
 
@@ -98,10 +99,22 @@ fun PetScreen(
                 }
             )
 
+//            OutlinedTextField(
+//                value = state.age ?: "",
+//                onValueChange = {
+//                    onEvent(PetEvent.ageChange(it))
+//                },
+//                placeholder = {
+//                    Text(text = "Age", color = Gray)
+//                }
+//            )
             OutlinedTextField(
-                value = state.age ?: "",
-                onValueChange = {
-                    onEvent(PetEvent.ageChange(it))
+                value = state.age?.toString() ?: "", // Convertendo Int para String
+                onValueChange = { newValue ->
+                    // Verifica se o novo valor é um número válido antes de enviar o evento
+                    if (newValue.isDigitsOnly()) {
+                        onEvent(PetEvent.ageChange(newValue.toInt()))
+                    }
                 },
                 placeholder = {
                     Text(text = "Age", color = Gray)

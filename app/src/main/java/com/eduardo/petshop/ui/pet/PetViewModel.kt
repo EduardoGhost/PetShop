@@ -72,7 +72,7 @@ class PetViewModel @Inject constructor(
             is PetEvent.ageChange -> {
                 _state.update {
                     it.copy(
-                        age = event.value
+                        age = event.value.toString()
                     )
                 }
             }
